@@ -1,0 +1,10 @@
+## Acceptance gate
+
+| ID | Required | Status | Evidence |
+|---|---|---|---|
+| ASSERTIONS | YES | PASS | [assertions] CHANGE_TEST_REPORT.md shows the AC-1 command `grep -qx 'yoyoyoyoy' README.md && head -n1 README.md &#124; grep -qx '# seren-test'` exited 0. It is a whole-line match, so it checks the new-line requirement, and it also checks the original first line is intact. AC-2 `sh tests/check.sh` passed in the regression run and in green-check.md, and that script compares stdout with cmp. The baseline run is marked NOT RUN, and the report notes no README content assertion beyond the AC-1 grep. |
+| COVERAGE | YES | PASS | [coverage] CHANGE_TEST_REPORT.md shows the AC-1 command (`grep -qx 'yoyoyoyoy' README.md && head -n1 README.md &#124; grep -qx '# seren-test'`) passed with exit 0. It uses a whole-line match and confirms the existing first line is preserved. `sh tests/check.sh` passed in the report and in green-check.md, which covers AC-2/R-1 for hello.c and the Makefile. The one gap is that no persisted test asserts README content beyond the AC-1 grep. The plan accepts that gap for a one-line text change. |
+| INTEGRITY | YES | PASS | Driver green-check recorded 1 passing verification command(s); see .uncle/workflow/green-check.tsv. |
+| NEGATIVE | YES | FAIL | [oracle] CHANGE_TEST_REPORT.md lists the baseline `sh tests/check.sh` as NOT RUN, and no defect was injected. No run showed AC-1 failing before the edit or on a bad input, so the checks' power to fail is unproven. The report also admits no test checks README content beyond the AC-1 grep. |
+| ORACLE | YES | PASS | [oracle] AC-1 compares against the literal 'yoyoyoyoy' via grep -qx, and the title check against '# seren-test'. Both values come from the requirement, not from the implementation. The AC-1 command exited 0 in CHANGE_TEST_REPORT.md, and the AC-2 regression `sh tests/check.sh` passed in both the report and green-check.md. |
+| RESULTS | YES | PASS | Driver green-check recorded 1 passing verification command(s); see .uncle/workflow/green-check.tsv. |
