@@ -1,0 +1,10 @@
+## Acceptance gate
+
+| ID | Required | Status | Evidence |
+|---|---|---|---|
+| ASSERTIONS | YES | PASS | [assertions] CHANGE_TEST_REPORT.md shows `grep -x yoyoyoyoy README.md` returned the line and `head -1 README.md` returned `# seren-test`. `sh tests/check.sh` passed, both in the report and in the driver's green-check.md, so AC-2 is covered. The assertions are grounded in the requested string and the earlier source read found no defects. The weak spot is that grep -x doesn't check the line is last or unique, and the report lists no README test beyond grep. |
+| COVERAGE | YES | PASS | [coverage] The driver's green-check.md shows `sh tests/check.sh` PASS, which covers AC-2, S-2 and I-1. CHANGE_TEST_REPORT.md shows `grep -x yoyoyoyoy README.md` and `head -1 README.md` both PASS for AC-1, S-1 and S-3, and it discloses that no new README test was added. Two gaps remain: the grep cannot detect duplicate lines or placement, and `.gitignore` was already modified at session start but is not mentioned in the plan. Neither gap changes AC-1 or AC-2 coverage. |
+| INTEGRITY | YES | PASS | Driver green-check recorded 1 passing verification command(s); see .uncle/workflow/green-check.tsv. |
+| NEGATIVE | YES | FAIL | [oracle] Neither CHANGE_TEST_REPORT.md nor green-check.md shows any run of the AC-1 grep against the pre-change README or against an injected defect, so there is no evidence it fails on a defect. `sh tests/check.sh` cannot fail on a README edit. The report's own coverage gaps note no new README test, and the grep cannot detect a duplicate line or a clobbered body. |
+| ORACLE | YES | PASS | [oracle] The AC-1 expected value `yoyoyoyoy` comes from the user's request, not from the implementation. CHANGE_TEST_REPORT.md shows `grep -x yoyoyoyoy README.md` and `head -1 README.md` (# seren-test) both PASS, and the green-check.md run of `sh tests/check.sh` also PASS. AC-2's expected hello output lives in protected tests/check.sh, which this change doesn't touch. |
+| RESULTS | YES | PASS | Driver green-check recorded 1 passing verification command(s); see .uncle/workflow/green-check.tsv. |
