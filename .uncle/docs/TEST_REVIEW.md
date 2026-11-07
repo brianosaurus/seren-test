@@ -1,0 +1,10 @@
+## Acceptance gate
+
+| ID | Required | Status | Evidence |
+|---|---|---|---|
+| ASSERTIONS | YES | FAIL | [assertions] CHANGE_TEST_REPORT.md shows the AC-1 to AC-4 commands exit 0, but the assertions are weak. AC-4 `git diff --name-only` is a bare command that can't see untracked files and was not compared to exactly README.md. No check asserts line 2 is blank and line 3 is `foo bar foo` (D-1), AC-3 passes before the change, and green-check.md ran only the two baseline commands, not the AC checks. |
+| COVERAGE | YES | FAIL | [coverage] CHANGE_TEST_REPORT.md shows AC-1 to AC-4 commands ran and passed, but the 'full test suite' row is still 'DRIVER PENDING', and green-check.md only ran the two baseline commands (test -f, grep -q). No check covers D-1 placement (blank line 2, 'foo bar foo' on line 3), and AC-4 (`git diff --name-only`) cannot show untracked or staged changes, so R-2 is only partly evidenced. |
+| INTEGRITY | YES | PASS | Driver green-check recorded 2 passing verification command(s); see .uncle/workflow/green-check.tsv. |
+| NEGATIVE | YES | FAIL | [oracle] Only the AC-1 and AC-2 checks could fail on a real defect. AC-3 (`! git grep -qi 'hello world'`) passes with or without the change. AC-4 (`git diff --name-only`) printed README.md, but README.md was already modified at session start, so it would show the same output without the edit, and it ignores untracked files. No before/after snapshot was used, and no check covers the blank-line separation or that the line appears exactly once. green-check.md ran only the baseline commands and shows no failing-defect evidence. |
+| ORACLE | YES | PASS | [oracle] Expected value `foo bar foo` comes from the user request and CHANGE_PLAN D-1, not from the implementation. CHANGE_TEST_REPORT.md shows `grep -qx 'foo bar foo' README.md` (AC-1) and the `head -1` = `# seren-test` check (AC-2) both ran and exited 0. The `-x` whole-line match is a strong oracle. |
+| RESULTS | YES | PASS | Driver green-check recorded 2 passing verification command(s); see .uncle/workflow/green-check.tsv. |
