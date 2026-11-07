@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>hello</title>
+<style>
+body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:#0f1115;color:#e6e6e6;font-family:ui-monospace,Menlo,Consolas,monospace}
+main{width:min(680px,92vw)}
+h1{font-size:14px;font-weight:600;color:#8b93a7;letter-spacing:.08em;text-transform:uppercase;margin:0 0 12px}
+pre{background:#171a21;border:1px solid #262b36;border-radius:8px;padding:14px 16px;margin:0 0 14px;overflow:auto;font-size:13px;line-height:1.5}
+.k{color:#7aa2f7}.s{color:#9ece6a}.c{color:#565f89}
+button{background:#7aa2f7;color:#0f1115;border:0;border-radius:6px;padding:9px 16px;font:600 13px ui-monospace,Menlo,monospace;cursor:pointer}
+button:hover{background:#9db8f9}
+#out{margin-left:12px;color:#9ece6a;font-size:14px}
+</style>
+</head>
+<body>
+<main>
+<h1>hello &middot; first look</h1>
+<pre><span class="c">/* hello.c */</span>
+<span class="k">#include</span> <span class="s">&lt;stdio.h&gt;</span>
+
+<span class="k">int</span> <span class="k">main</span>(<span class="k">void</span>) {
+    <span class="k">printf</span>(<span class="s">"Hello, world!\n"</span>);
+    <span class="k">return</span> <span class="k">0</span>;
+}</pre>
+<pre><span class="c"># Makefile</span>
+<span class="k">CC</span> = cc
+<span class="k">all</span>: hello
+
+<span class="k">hello</span>: hello.c
+	$(CC) -o hello hello.c
+
+<span class="k">clean</span>:
+	rm -f hello</pre>
+<button id="run">$ ./hello</button><span id="out"></span>
+</main>
+<script>
+var b=document.getElementById('run'),o=document.getElementById('out');
+b.addEventListener('click',function(){
+  o.textContent='';
+  var t='Hello, world!';
+  var i=0;
+  (function step(){
+    if(i<t.length){o.textContent+=t[i++];setTimeout(step,40);}
+  })();
+});
+</script>
+</body>
+</html>

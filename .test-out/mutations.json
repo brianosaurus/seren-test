@@ -1,0 +1,64 @@
+{
+  "list": "tests/mutations/list.mjs",
+  "caught": 0,
+  "survived": 0,
+  "invalid": 0,
+  "unreliable": 9,
+  "controlsFailed": 1,
+  "results": [
+    {
+      "id": "DI-1",
+      "file": "hello.c",
+      "status": "UNRELIABLE",
+      "detail": "its unmutated control failed"
+    },
+    {
+      "id": "DI-2",
+      "file": "hello.c",
+      "status": "UNRELIABLE",
+      "detail": "its unmutated control failed"
+    },
+    {
+      "id": "DI-3",
+      "file": "hello.c",
+      "status": "UNRELIABLE",
+      "detail": "its unmutated control failed"
+    },
+    {
+      "id": "DI-4",
+      "file": "hello.c",
+      "status": "UNRELIABLE",
+      "detail": "its unmutated control failed"
+    },
+    {
+      "id": "DI-5",
+      "file": "Makefile",
+      "status": "UNRELIABLE",
+      "detail": "its unmutated control failed"
+    },
+    {
+      "id": "DI-6",
+      "file": "Makefile",
+      "status": "UNRELIABLE",
+      "detail": "its unmutated control failed"
+    },
+    {
+      "id": "DI-7",
+      "file": "Makefile",
+      "status": "UNRELIABLE",
+      "detail": "its unmutated control failed"
+    },
+    {
+      "id": "DI-8",
+      "file": "Makefile",
+      "status": "UNRELIABLE",
+      "detail": "its unmutated control failed"
+    },
+    {
+      "id": "DI-9",
+      "file": "Makefile",
+      "status": "UNRELIABLE",
+      "detail": "its unmutated control failed"
+    }
+  ]
+}
