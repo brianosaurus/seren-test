@@ -1,0 +1,10 @@
+## Acceptance gate
+
+| ID | Required | Status | Evidence |
+|---|---|---|---|
+| ASSERTIONS | YES | PASS | [assertions] CHANGE_TEST_REPORT.md shows the AC-1 command `grep -qx yoyoyoyoy README.md && [ "$(head -n1 README.md)" = "# seren-test" ]` exited 0. It uses a whole-line match (-x) and checks that `# seren-test` is still the first line. `sh tests/check.sh` passed before and after the edit in the report, and passed again in green-check.md. `git diff --name-only` listed only README.md plus the pre-existing .gitignore, so hello.c, Makefile and index.html are untouched (AC-2). |
+| COVERAGE | YES | PASS | [coverage] CHANGE_TEST_REPORT.md shows the AC-1 command `grep -qx yoyoyoyoy README.md && [ "$(head -n1 README.md)" = "# seren-test" ]` exited 0. `sh tests/check.sh` passed before and after the edit, and green-check.md shows the driver's own run of it as PASS with no regressions. `git diff --name-only` listed only README.md plus the pre-existing .gitignore, which covers AC-2. Remaining gaps: nothing asserts that the line is last or that no other README lines changed, and placement rests on unconfirmed assumption A-1. |
+| INTEGRITY | YES | PASS | Driver green-check recorded 1 passing verification command(s); see .uncle/workflow/green-check.tsv. |
+| NEGATIVE | YES | FAIL | [oracle] CHANGE_TEST_REPORT.md and green-check.md show no defect-injection run. Nothing shows that the AC-1 grep fails when the line is missing, or that `tests/check.sh` fails on changed hello output. Only passing runs are recorded, so the checks' ability to fail is unproven. |
+| ORACLE | YES | PASS | [oracle] AC-1's expected value `yoyoyoyoy` comes from the request, not the implementation. The driver ran `grep -qx yoyoyoyoy README.md && [ "$(head -n1 README.md)" = "# seren-test" ]` (exit 0), which checks the exact line and the heading, per CHANGE_TEST_REPORT.md. AC-2 uses the pre-existing `sh tests/check.sh`, which passed in baseline, regression and green-check.md. |
+| RESULTS | YES | PASS | Driver green-check recorded 1 passing verification command(s); see .uncle/workflow/green-check.tsv. |
