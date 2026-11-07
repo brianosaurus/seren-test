@@ -16,9 +16,21 @@ make >make.out 2>&1 || { cat make.out >&2; fail "make exited nonzero"; }
 ./hello >out.txt 2>err.txt </dev/null
 code=$?
 [ "$code" -eq 0 ] || fail "hello exit code $code, expected 0"
-printf 'Hello, world!\n' >expected.txt
-cmp -s out.txt expected.txt || fail "stdout differs from 'Hello, world!' + newline"
+printf 'foo bar foo\n' >expected.txt
+cmp -s out.txt expected.txt || fail "stdout differs from 'foo bar foo' + newline"
 [ ! -s err.txt ] || fail "hello wrote to stderr"
+
+# T-3: hello depends on hello.c (stale binary is rebuilt)
+touch -t 200001010000 hello
+touch hello.c
+make >make.out 2>&1 || fail "make after touching hello.c failed"
+[ -n "$(find hello -newer expected.txt 2>/dev/null)" ] || fail "make did not rebuild hello after hello.c changed"
+
+# T-5: a compile failure must make make fail
+make clean >/dev/null 2>&1
+printf 'int main( {\n' >hello.c
+make >make.out 2>&1 && fail "make succeeded on a hello.c that does not compile"
+cp "$src/hello.c" hello.c
 
 make clean >/dev/null 2>&1 || fail "make clean exited nonzero"
 [ ! -e hello ] || fail "hello still present after make clean"

@@ -22,7 +22,7 @@ button:hover{background:#9db8f9}
 <span class="k">#include</span> <span class="s">&lt;stdio.h&gt;</span>
 
 <span class="k">int</span> <span class="k">main</span>(<span class="k">void</span>) {
-    <span class="k">printf</span>(<span class="s">"Hello, world!\n"</span>);
+    <span class="k">printf</span>(<span class="s">"foo bar foo\n"</span>);
     <span class="k">return</span> <span class="k">0</span>;
 }</pre>
 <pre><span class="c"># Makefile</span>
@@ -40,7 +40,7 @@ button:hover{background:#9db8f9}
 var b=document.getElementById('run'),o=document.getElementById('out');
 b.addEventListener('click',function(){
   o.textContent='';
-  var t='Hello, world!';
+  var t='foo bar foo';
   var i=0;
   (function step(){
     if(i<t.length){o.textContent+=t[i++];setTimeout(step,40);}
