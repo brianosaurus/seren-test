@@ -1,0 +1,10 @@
+## Acceptance gate
+
+| ID | Required | Status | Evidence |
+|---|---|---|---|
+| ASSERTIONS | YES | PASS | [assertions] CHANGE_TEST_REPORT.md shows `grep -qx yoyoyoyoy README.md` (AC-1) and `test "$(head -1 README.md)" = '# seren-test'` (AC-2) both exited 0, and `sh tests/check.sh` passed in both the report and green-check.md (AC-3). The assertions are independent hard-coded literals with whole-line matching. Gaps remain: nothing checks that the line is last or that the diff is only that line, and no mutation check was run. Those gaps are minor for a one-line text edit. |
+| COVERAGE | YES | PASS | [coverage] CHANGE_TEST_REPORT.md shows `grep -qx yoyoyoyoy README.md` (AC-1) and `test "$(head -1 README.md)" = '# seren-test'` (AC-2) both ran and exited 0. green-check.md shows the driver's own `sh tests/check.sh` (AC-3) as PASS with no regressions. Remaining weaknesses are non-blocking: AC-1 does not check position or uniqueness, no check confirms the diff is limited to README.md, and the pre-edit baseline is listed as NOT RUN in the report. |
+| INTEGRITY | YES | PASS | Driver green-check recorded 1 passing verification command(s); see .uncle/workflow/green-check.tsv. |
+| NEGATIVE | YES | FAIL | [oracle] No run in CHANGE_TEST_REPORT.md or green-check.md injected a defect, so no test shows it fails for a representative one. The baseline `sh tests/check.sh` is NOT RUN pre-edit, and the plan names no defect-injection target. The `grep -qx` check in AC-1 also accepts a duplicated line, and a missing trailing newline would pass too. |
+| ORACLE | YES | PASS | [oracle] AC-1 and AC-2 expected values are the literals `yoyoyoyoy` and `# seren-test` from the plan, not from the implementation. CHANGE_TEST_REPORT.md shows both greps passed (exit 0), and green-check.md shows `sh tests/check.sh` PASS. The report doesn't show that check.sh's exact-output oracle is a fixed fixture, though the plan calls it an exact cmp (R-1). |
+| RESULTS | YES | PASS | Driver green-check recorded 1 passing verification command(s); see .uncle/workflow/green-check.tsv. |

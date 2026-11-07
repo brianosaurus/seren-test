@@ -1,0 +1,13 @@
+## Findings
+
+| ID | Severity | Evidence | Affected requirement | Required correction | Blocks |
+|---|---|---|---|---|---|
+| FA-001 | LOW | TEST_REVIEW.json NEGATIVE row: FAIL, required=false, severity MINOR. | Not stated | The NEGATIVE (mutation) row failed. No defect injection was run, and the AC-1 grep would accept a duplicated line or a missing trailing newline. This is informational and does not block release (Blocks NO). | NO |
+| FA-002 | LOW | CHANGE_TEST_REPORT.json: the baseline command has status NOT RUN. green-check.md shows the post-edit `sh tests/check.sh` as PASS. | Not stated | The pre-edit baseline `sh tests/check.sh` is recorded as NOT RUN. The post-edit run passes, so there is no regression evidence against a pre-edit state. | NO |
+| FA-003 | LOW | TEST_REVIEW.json ASSERTIONS and COVERAGE rows list these gaps. IMPLEMENTATION_NOTES.json records `.gitignore` as a driver-recorded scope deviation. | Not stated | No check confirms that `yoyoyoyoy` is the last line, that it appears only once, or that the diff is limited to README.md. The driver also recorded an unplanned `.gitignore` change that has no verification evidence. | NO |
+| FA-004 | LOW | CHANGE_TEST_REPORT.json coverage_gaps and IMPLEMENTATION_NOTES.json unresolved_concerns both list D-1. | Not stated | The choice of README.md as the target file (D-1) is an assumption and is unverified against the user's intent. | NO |
+| FA-005 | LOW | CHANGE_TEST_REPORT.json lists the baseline `sh tests/check.sh` as NOT RUN and the full suite as DRIVER PENDING. The driver's green-check.md later shows `sh tests/check.sh` as PASS, which covers the pending item. | Not stated | No waivers are recorded for any required row. The baseline check, the NEGATIVE row and the driver-pending full suite were not run or verified, and nothing waives them. None of these gaps blocks release. | NO |
+| FA-006 | LOW | IMPLEMENTATION_NOTES.json unresolved_concerns and CHANGE_TEST_REPORT.json coverage_gaps both flag D-1 as unverified. | Not stated | The target-file choice (D-1, README.md) is an unverified assumption about user intent. No waiver or confirmation covers it, so the requirement stays unverified for the reviewer. | NO |
+| FA-007 | LOW | IMPLEMENTATION_NOTES.json driver-recorded deviation for `.gitignore`: 'Changed outside the plan's change-impact table... Review it in the diff.' The change plan lists only README.md. | Not stated | The `.gitignore` change falls outside the plan's change-impact table. The implementation notes give no rationale or waiver, and the driver only flagged it for diff review. | NO |
+
+READY WITH NON-BLOCKING ISSUES

@@ -1,2 +1,6 @@
 hello
-.uncle
+.uncle/*
+!.uncle/docs/
+!.uncle/attestation.json
+!.uncle/attestation.sig
+!.uncle/allowed_signers
